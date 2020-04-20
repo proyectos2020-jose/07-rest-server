@@ -1,6 +1,6 @@
-
 require('./config/config');
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 //Paquete usado para obtener en formato json los valores enviados en el body de la request.
 const bodyParser = require('body-parser');
@@ -10,39 +10,17 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-    res.json('Hello World')
-})
+//Generamos las rutas en forma de middleware y las importamos a nuestro servidor.
+app.use(require('./routes/usuario'));
 
-app.get('/usuario', function (req, res) {
-    res.json('get usuario')
-})
-
-app.post('/usuario', function (req, res) {
-
-    let body = req.body;
-
-    if(body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            mensaje: 'Se debe de introducir un nombre'
-        })
-    } else {
-        res.json({body})
+// Se han metido todos estos uses para que los use mongoose y no de deprecados.
+mongoose.connect(process.env.url_db, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},(err, res) => {
+    if(err) {
+        throw err;
     }
-})
-
-app.put('/usuario/:id', function (req, res) {
-    let id = req.params.id;
-    res.json({
-        id
-    })
-})
-
-app.delete('/usuario', function (req, res) {
-    res.json('delete usuario')
+    console.log('base de datos online');
 })
 
 app.listen(process.env.PORT, ()=> {
