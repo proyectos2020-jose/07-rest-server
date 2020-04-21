@@ -35,10 +35,7 @@ app.post('/login', (req, res) => {
                 })
             }
 
-            let token = jwt.sign(
-                {usuario:usuarioDB},
-                process.env.JWT_SECRET,
-                {expiresIn: process.env.JWT_EXPIRE});
+            let token = jwt.sign({usuario:usuarioDB}, process.env.JWT_SECRET, {expiresIn: "30d"});
 
             // Como la autenticación ha sido exitosa, entonces procedemos a generar un token.
             res.json({

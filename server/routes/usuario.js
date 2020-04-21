@@ -5,7 +5,10 @@ const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-app.get('/usuario', function (req, res) {
+//Middleware para comprobar la autenticación
+const {verificar, checkRol} = require('../middlewares/authentication');
+
+app.get('/usuario', verificar, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -34,7 +37,7 @@ app.get('/usuario', function (req, res) {
     })
 })
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario',  [verificar, checkRol], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -58,7 +61,7 @@ app.post('/usuario', function (req, res) {
     })
 })
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verificar, checkRol], (req, res) => {
     let id = req.params.id;
     // Con el pick del underscore seleccionamos solo los campos que realmente se van a extraer del body de la req.
     let body = _.pick(req.body, ['nombre','password','img','rol','estado'])
@@ -79,36 +82,8 @@ app.put('/usuario/:id', function (req, res) {
     })
 })
 
-/*app.delete('/usuario/:id', function (req, res) {
 
-    let id = req.params.id;
-
-    Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-        if(err) {
-            return res.status(400).json({
-                ok: false,
-                err
-            })
-        }
-
-        if(!usuarioBorrado) {
-            return res.status(400).json({
-                ok: false,
-                err: {
-                    message: 'No se encontró el usuario'
-                }
-            })
-        }
-
-        res.json({
-            ok: true,
-            usuario: usuarioBorrado
-        })
-    })
-
-})*/
-
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificar, checkRol], (req, res) => {
 
     let id = req.params.id;
 
