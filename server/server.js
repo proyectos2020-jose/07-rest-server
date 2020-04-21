@@ -9,11 +9,13 @@ const bodyParser = require('body-parser');
 // parse application/x-www-form-urlencoded.
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use(require('./routes/index'));
+
 // parse application/json
 app.use(bodyParser.json());
 
 //Generamos las rutas en forma de middleware y las importamos a nuestro servidor.
-app.use(require('./routes/usuario'));
+
 
 // Se han metido todos estos uses para que los use mongoose y no de deprecados.
 mongoose.connect(process.env.url_db, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true},(err, res) => {
