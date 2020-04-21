@@ -12,3 +12,6 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || 'este-es-el-seed-desarrollo';
 
 // Expiración de jwt
 process.env.JWT_EXPIRE = "30d";
+
+// Client id de google
+process.env.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '103372196632-vsom25ktrf61qku08kn85isjs7l1b7j2.apps.googleusercontent.com';
