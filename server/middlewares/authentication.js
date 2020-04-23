@@ -23,7 +23,7 @@ let verificar = (req, res, next) => {
 let checkRol = (req, res, next) => {
     let usuario = req.usuario;
 
-    if(usuario.rol !== 'USER_ADMIN') {
+    if(usuario.rol !== 'ADMIN_ROLE') {
         return res.status(401).json({
             ok: false,
             err: {
