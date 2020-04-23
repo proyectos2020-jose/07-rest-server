@@ -2,4 +2,7 @@
 node_modules
 upload/productos/*
 upload/usuarios/*
+!upload/usuarios/.keep
+!upload/productos/.keep
+
 
