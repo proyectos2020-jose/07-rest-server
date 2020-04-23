@@ -5,7 +5,7 @@ const app = express()
 //Paquete usado para obtener en formato json los valores enviados en el body de la request.
 const bodyParser = require('body-parser');
 
-//Usamos una utilidad de nodde llamada path para generar rutas por trozos
+//Usamos una utilidad de node llamada path para generar rutas por trozos
 const path = require('path')
 
 // Cuando se hace use, es porque son middlewares. Son funciones que se van a ejecutar para cada petición.

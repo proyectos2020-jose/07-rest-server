@@ -34,4 +34,25 @@ let checkRol = (req, res, next) => {
     next();
 }
 
-module.exports = {verificar, checkRol};
+//Verificar token
+let verificarImg = (req, res, next) => {
+
+    let token = req.query.token
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if(err) {
+            return res.status(401).json({
+                ok:false,
+                err
+            })
+        }
+
+        req.usuario = decoded.usuario;
+        //Se hace el next para que continue ejecutando el resto de la llamada, sino se quedaría aquí.
+        next();
+    })
+
+}
+
+
+module.exports = {verificar, checkRol, verificarImg};
